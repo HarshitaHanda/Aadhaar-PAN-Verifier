@@ -1,6 +1,5 @@
 streamlit==1.28.0
-opencv-python-headless==4.8.0.76
-numpy==1.24.3
-pillow==10.0.0
+opencv-python-headless==4.9.0.80  # Updated version
+numpy==1.26.4  # Compatible with Python 3.13
 pytesseract==0.3.10
-scikit-image==0.21.0
+scikit-image==0.23.2  # Updated version
