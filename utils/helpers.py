@@ -1,24 +1,12 @@
 import cv2
 import numpy as np
 
-def calculate_ela(image, quality=90):
-    """Calculate Error Level Analysis for tamper detection"""
-    temp_path = "temp_ela.jpg"
-    cv2.imwrite(temp_path, image, [cv2.IMWRITE_JPEG_QUALITY, quality])
-    temp_image = cv2.imread(temp_path)
-    os.remove(temp_path)
-    
-    if temp_image is None:
-        return 0
-    
-    # Resize if needed
-    if image.shape != temp_image.shape:
-        temp_image = cv2.resize(temp_image, (image.shape[1], image.shape[0]))
-    
-    # Calculate difference
-    diff = cv2.absdiff(image, temp_image)
-    diff_mean = np.mean(diff)
-    return min(100, diff_mean * 0.5)  # Scale to percentage
+def calculate_ela(image):
+    """Simplified tamper detection without file I/O"""
+    compressed = cv2.resize(image, None, fx=0.95, fy=0.95)
+    restored = cv2.resize(compressed, (image.shape[1], image.shape[0]))
+    diff = cv2.absdiff(image, restored)
+    return min(100, np.mean(diff) * 0.3)  # Scale to percentage
 
 def extract_region(image, coordinates):
     """Extract region of interest from image"""
